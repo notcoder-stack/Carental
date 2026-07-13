@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
+use Inertia\Inertia;
 
 class CarController extends Controller
 {
@@ -13,7 +14,10 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        $cars = Car::all();
+        return Inertia::render('home', [
+            'cars' => $cars,
+        ]);
     }
 
     /**
@@ -27,9 +31,26 @@ class CarController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCarRequest $request)
+    public function store(\Illuminate\Http\Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'color' => 'required|string|max:255',
+            'rent_price' => 'required|numeric',
+            'image' => 'nullable|file|image|max:5120', // 5MB max
+        ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('cars', 'public');
+            $validated['image'] = '/storage/' . $path;
+        }
+
+        $request->user()->cars()->create($validated);
+
+        return redirect()->route('dashboard');
     }
 
     /**
