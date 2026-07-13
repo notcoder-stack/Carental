@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 
 interface LayoutProps {
@@ -8,6 +8,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
     const { auth } = usePage<any>().props;
     const user = auth.user;
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     return (
         <div className="flex h-screen bg-gray-50 font-sans">
@@ -35,21 +36,40 @@ export default function Layout({ children }: LayoutProps) {
                     </nav>
                 </div>
 
-                <div className="p-4 border-t border-gray-800">
-                    <div className="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-xl">
-                        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
-                            {user?.name?.charAt(0)}
+                <div className="p-4 border-t border-gray-800 relative">
+                    {/* Dropdown Menu */}
+                    {dropdownOpen && (
+                        <div className="absolute bottom-full left-4 right-4 mb-2 bg-gray-800 rounded-xl shadow-lg border border-gray-700 overflow-hidden z-50">
+                            <div className="p-1">
+                                <Link href="/settings" className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors">
+                                    Settings
+                                </Link>
+                                <form method="post" action="/logout">
+                                    <button type="submit" className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-gray-700 rounded-lg transition-colors">
+                                        Log out
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white truncate">{user?.name}</p>
-                            <p className="text-xs text-gray-400 truncate capitalize">{user?.role}</p>
+                    )}
+                    
+                    <button 
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                        className="w-full flex items-center justify-between gap-3 px-4 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl transition-colors text-left"
+                    >
+                        <div className="flex items-center gap-3 min-w-0">
+                            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                                {user?.name?.charAt(0)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-white truncate">{user?.name}</p>
+                                <p className="text-xs text-gray-400 truncate capitalize">{user?.role}</p>
+                            </div>
                         </div>
-                    </div>
-                    <form method="post" action="/logout" className="mt-2">
-                        <button type="submit" className="w-full text-left px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
-                            Log out
-                        </button>
-                    </form>
+                        <svg className={`w-4 h-4 text-gray-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
                 </div>
             </aside>
 
