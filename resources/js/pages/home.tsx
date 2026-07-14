@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import Navbar from "../components/Navbar";
 
 interface Car {
@@ -17,6 +17,8 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ cars }: WelcomeProps) {
+    const { auth } = usePage<any>().props;
+
     return (
         <div className="min-h-screen bg-gray-50 font-sans">
             <Navbar />
@@ -29,16 +31,7 @@ export default function Welcome({ cars }: WelcomeProps) {
                 <p className="max-w-2xl mx-auto mt-4 text-lg text-gray-500 sm:mt-6 sm:text-xl lg:mt-8">
                     Explore our premium selection of vehicles. Whether it's for a weekend getaway or a long business trip, we have the right car for you.
                 </p>
-                <div className="mt-8 flex justify-center gap-4">
-                    <button className="px-8 py-3 text-base font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5">
-                        Browse Fleet
-                    </button>
-                    <button className="px-8 py-3 text-base font-medium text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:text-gray-900 transition-all shadow-sm">
-                        Learn More
-                    </button>
-                </div>
             </main>
-
             {/* Grid Section */}
             <section className="px-4 mx-auto max-w-screen-xl pb-24">
                 <div className="flex items-center justify-between mb-8">
@@ -98,11 +91,19 @@ export default function Welcome({ cars }: WelcomeProps) {
                                             <span className="text-2xl font-bold text-gray-900">${car.rent_price}</span>
                                         </div>
                                     </div>
-                                    <Link href="/login">
-                                        <button className="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-600 transition-colors duration-300 focus:ring-4 focus:ring-blue-100 outline-none shadow-md shadow-gray-200 hover:shadow-blue-500/25">
-                                            Rent Now
-                                        </button>
-                                    </Link>
+                                    {auth.user ? (
+                                        <Link href={`/cars/${car.id}/rent`} method="post" as="button">
+                                            <button className="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-600 transition-colors duration-300 focus:ring-4 focus:ring-blue-100 outline-none shadow-md shadow-gray-200 hover:shadow-blue-500/25">
+                                                Rent Now
+                                            </button>
+                                        </Link>
+                                    ) : (
+                                        <Link href="/login">
+                                            <button className="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-600 transition-colors duration-300 focus:ring-4 focus:ring-blue-100 outline-none shadow-md shadow-gray-200 hover:shadow-blue-500/25">
+                                                Rent Now
+                                            </button>
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                         </div>

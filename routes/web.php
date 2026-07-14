@@ -36,4 +36,6 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
+    Route::post('cars/{car}/rent', [\App\Http\Controllers\RentRequestController::class, 'store'])->name('rent.store');
+    Route::post('notifications/{id}/read', [\App\Http\Controllers\RentRequestController::class, 'markNotificationAsRead'])->name('notifications.read');
 });

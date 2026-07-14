@@ -39,6 +39,10 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        if ($user->role === 'lessor') {
+            return redirect()->route('dashboard');
+        }
+
+        return redirect()->route('home');
     }
 }

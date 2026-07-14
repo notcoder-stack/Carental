@@ -24,7 +24,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard', absolute: false));
+            if(Auth::user()->role === 'lessor') {
+                return redirect()->route('dashboard');
+            }
+
+            return redirect()->intended(route('home', absolute: false));
         }
 
         return back()->withErrors([
