@@ -17,10 +17,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::post('cars', [\App\Http\Controllers\CarController::class, 'store'])->name('cars.store');
+
+    Route::get('settings', [\App\Http\Controllers\SettingsController::class, 'show'])->name('settings.show');
+    Route::post('settings', [\App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
+
+    Route::get('wishlist', [\App\Http\Controllers\WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('wishlist/{car}', [\App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
+
+    Route::get('lessor/clients', [\App\Http\Controllers\LessorClientController::class, 'index'])->name('lessor.clients');
+    
+    Route::get('lessors/{id}', [\App\Http\Controllers\LessorProfileController::class, 'show'])->name('lessors.show');
 });
 
 require __DIR__.'/settings.php';
-
 
 Route::get('/', [CarController::class, 'index'])->name('home');
 

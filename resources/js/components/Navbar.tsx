@@ -19,7 +19,7 @@ const Navbar = () => {
                     </span>
                 </Link>
 
-                <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse gap-3 relative">
+                <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse gap-3 relative items-center">
                     {auth?.user ? (
                         <div className="relative">
                             <button
@@ -39,11 +39,11 @@ const Navbar = () => {
                                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg py-1 z-50">
                                     {auth.user.role === 'lessor' && (
                                         <Link href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium">
-                                            Dashboard
+                                            Tableau de bord
                                         </Link>
                                     )}
-                                    <Link href="/logout" method="post" as="button" className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium">
-                                        Log out
+                                    <Link href="/logout" method="post" as="button" className="block w-full text-start px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium">
+                                        Déconnexion
                                     </Link>
                                 </div>
                             )}
@@ -54,13 +54,13 @@ const Navbar = () => {
                                 href="/login"
                                 className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium rounded-xl text-sm px-4 py-2.5 transition-all duration-200"
                             >
-                                Log in
+                                Connexion
                             </Link>
                             <Link
                                 href="/register"
                                 className="text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center transition-all duration-200 shadow-md shadow-gray-900/10 transform hover:-translate-y-0.5"
                             >
-                                Sign up
+                                S'inscrire
                             </Link>
                         </>
                     )}

@@ -1,4 +1,4 @@
-import { Link, usePage } from "@inertiajs/react";
+import { Link, usePage, router } from "@inertiajs/react";
 import Navbar from "../components/Navbar";
 
 interface Car {
@@ -9,6 +9,7 @@ interface Car {
     year: number;
     color: string;
     rent_price: number;
+    user_id: number;
     image: string;
 }
 
@@ -18,6 +19,13 @@ interface WelcomeProps {
 
 export default function Welcome({ cars }: WelcomeProps) {
     const { auth } = usePage<any>().props;
+    const wishlistedCars = auth?.wishlisted_cars || [];
+
+    const toggleWishlist = (carId: number) => {
+        router.post(`/wishlist/${carId}`, {}, {
+            preserveScroll: true,
+        });
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 font-sans">
@@ -26,16 +34,16 @@ export default function Welcome({ cars }: WelcomeProps) {
             {/* Hero Section */}
             <main className="pt-28 pb-16 sm:pt-32 sm:pb-24 lg:pb-32 px-4 mx-auto max-w-screen-xl text-center">
                 <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-                    Find your <span className="text-blue-600">perfect drive</span>
+                    Trouvez votre <span className="text-blue-600">voiture idéale</span>
                 </h1>
                 <p className="max-w-2xl mx-auto mt-4 text-lg text-gray-500 sm:mt-6 sm:text-xl lg:mt-8">
-                    Explore our premium selection of vehicles. Whether it's for a weekend getaway or a long business trip, we have the right car for you.
+                    Explorez notre sélection premium de véhicules. Que ce soit pour une escapade le temps d'un week-end ou un long voyage d'affaires, nous avons la voiture qu'il vous faut.
                 </p>
             </main>
             {/* Grid Section */}
             <section className="px-4 mx-auto max-w-screen-xl pb-24">
                 <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Available Vehicles</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Véhicules Disponibles</h2>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -54,6 +62,16 @@ export default function Welcome({ cars }: WelcomeProps) {
                                 <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-gray-700 shadow-sm border border-gray-100">
                                     {car.year}
                                 </div>
+                                {auth?.user && auth.user.role === 'client' && (
+                                    <button
+                                        onClick={() => toggleWishlist(car.id)}
+                                        className="absolute top-3 left-3 p-2 bg-white/90 backdrop-blur-md rounded-full shadow-sm hover:scale-110 transition-transform duration-200 border border-gray-100 focus:outline-none"
+                                    >
+                                        <svg className={`w-5 h-5 ${wishlistedCars.includes(car.id) ? 'text-red-500 fill-current' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </button>
+                                )}
                             </div>
 
                             {/* Card Content */}
@@ -69,14 +87,14 @@ export default function Welcome({ cars }: WelcomeProps) {
                                 <div className="flex items-center space-x-4 text-sm text-gray-600 mt-4 mb-6">
                                     <div className="flex items-center">
                                         <div
-                                            className="w-3.5 h-3.5 rounded-full mr-2 border border-gray-200 shadow-inner"
+                                            className="w-3.5 h-3.5 rounded-full mr-2 border border-gray-200 shadow-inner rtl:mr-0 rtl:ml-2"
                                             style={{ backgroundColor: car.color.toLowerCase(), background: car.color.toLowerCase() === 'white' ? '#f3f4f6' : car.color.toLowerCase() }}
                                             title={car.color}
                                         ></div>
                                         <span className="capitalize">{car.color}</span>
                                     </div>
                                     <div className="flex items-center">
-                                        <svg className="w-4 h-4 mr-1.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-4 h-4 mr-1.5 rtl:mr-0 rtl:ml-1.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                         Auto
@@ -86,21 +104,21 @@ export default function Welcome({ cars }: WelcomeProps) {
                                 {/* Bottom Action Row */}
                                 <div className="mt-auto pt-5 border-t border-gray-100 flex items-center justify-between">
                                     <div className="flex flex-col">
-                                        <span className="text-sm text-gray-500 font-medium mb-0.5">Daily rate</span>
+                                        <span className="text-sm text-gray-500 font-medium mb-0.5">Tarif journalier</span>
                                         <div>
                                             <span className="text-2xl font-bold text-gray-900">${car.rent_price}</span>
                                         </div>
                                     </div>
-                                    {auth.user ? (
-                                        <Link href={`/cars/${car.id}/rent`} method="post" as="button">
+                                    {auth?.user ? (
+                                        <Link href={`/lessors/${car.user_id}`}>
                                             <button className="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-600 transition-colors duration-300 focus:ring-4 focus:ring-blue-100 outline-none shadow-md shadow-gray-200 hover:shadow-blue-500/25">
-                                                Rent Now
+                                                Voir le loueur
                                             </button>
                                         </Link>
                                     ) : (
                                         <Link href="/login">
                                             <button className="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-600 transition-colors duration-300 focus:ring-4 focus:ring-blue-100 outline-none shadow-md shadow-gray-200 hover:shadow-blue-500/25">
-                                                Rent Now
+                                                Voir le loueur
                                             </button>
                                         </Link>
                                     )}

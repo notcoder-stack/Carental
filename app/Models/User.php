@@ -51,4 +51,14 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->hasMany(Car::class);
     }
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function rentRequests()
+    {
+        return $this->hasMany(RentRequest::class, 'client_id');
+    }
 }

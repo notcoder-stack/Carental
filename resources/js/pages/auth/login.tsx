@@ -20,11 +20,11 @@ export default function Login() {
             
             <div className="pt-32 pb-16 px-4 flex justify-center items-center">
                 <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md">
-                    <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Welcome back</h2>
+                    <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Bon retour</h2>
                     
                     <form onSubmit={submit} className="space-y-5">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Adresse e-mail</label>
                             <input
                                 type="email"
                                 value={data.email}
@@ -37,7 +37,7 @@ export default function Login() {
 
                         <div>
                             <div className="flex justify-between mb-1">
-                                <label className="block text-sm font-medium text-gray-700">Password</label>
+                                <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
                             </div>
                             <input
                                 type="password"
@@ -58,7 +58,7 @@ export default function Login() {
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                             />
                             <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-700">
-                                Remember me
+                                Se souvenir de moi
                             </label>
                         </div>
 
@@ -67,14 +67,14 @@ export default function Login() {
                             disabled={processing}
                             className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all disabled:opacity-70 mt-4 shadow-md shadow-blue-500/30"
                         >
-                            {processing ? 'Signing in...' : 'Sign in'}
+                            {processing ? 'Connexion en cours...' : 'Se connecter'}
                         </button>
                     </form>
 
                     <p className="mt-8 text-center text-sm text-gray-600">
-                        Don't have an account?{' '}
+                        Vous n'avez pas de compte ?{' '}
                         <Link href="/register" className="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-                            Sign up here
+                            S'inscrire ici
                         </Link>
                     </p>
                 </div>

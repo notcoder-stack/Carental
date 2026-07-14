@@ -24,11 +24,11 @@ export default function Register() {
             
             <div className="pt-32 pb-16 px-4 flex justify-center items-center">
                 <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 w-full max-w-lg">
-                    <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Create an account</h2>
+                    <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Créer un compte</h2>
                     
                     <form onSubmit={submit} className="space-y-5">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
                             <input
                                 type="text"
                                 value={data.name}
@@ -40,7 +40,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Adresse e-mail</label>
                             <input
                                 type="email"
                                 value={data.email}
@@ -53,7 +53,7 @@ export default function Register() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
                                 <input
                                     type="password"
                                     value={data.password}
@@ -65,7 +65,7 @@ export default function Register() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Confirmer le mot de passe</label>
                                 <input
                                     type="password"
                                     value={data.password_confirmation}
@@ -77,20 +77,20 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">I want to...</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Je souhaite...</label>
                             <select
                                 value={data.role}
                                 onChange={(e) => setData('role', e.target.value)}
                                 className={`w-full px-4 py-2.5 rounded-xl border ${errors.role ? 'border-red-500' : 'border-gray-300'} focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none bg-gray-50`}
                             >
-                                <option value="client">Rent cars (Client)</option>
-                                <option value="lessor">List my cars for rent (Lessor)</option>
+                                <option value="client">Louer des voitures (Client)</option>
+                                <option value="lessor">Mettre mes voitures en location (Loueur)</option>
                             </select>
                             {errors.role && <p className="mt-1 text-sm text-red-500">{errors.role}</p>}
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
                             <input
                                 type="text"
                                 value={data.address}
@@ -102,7 +102,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Numéro de téléphone</label>
                             <input
                                 type="tel"
                                 value={data.phone}
@@ -118,14 +118,14 @@ export default function Register() {
                             disabled={processing}
                             className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all disabled:opacity-70 mt-4 shadow-md shadow-blue-500/30"
                         >
-                            {processing ? 'Creating account...' : 'Create account'}
+                            {processing ? 'Création du compte...' : 'Créer un compte'}
                         </button>
                     </form>
 
                     <p className="mt-8 text-center text-sm text-gray-600">
-                        Already have an account?{' '}
+                        Vous avez déjà un compte ?{' '}
                         <Link href="/login" className="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-                            Sign in here
+                            Se connecter ici
                         </Link>
                     </p>
                 </div>

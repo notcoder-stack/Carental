@@ -40,7 +40,8 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user() ? array_merge($request->user()->toArray(), [
-                    'unreadNotifications' => $request->user()->unreadNotifications
+                    'unreadNotifications' => $request->user()->unreadNotifications,
+                    'wishlisted_cars' => $request->user()->wishlists()->pluck('car_id'),
                 ]) : null,
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',

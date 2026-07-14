@@ -17,14 +17,14 @@ export default function Layout({ children }: LayoutProps) {
             {/* Sidebar */}
             <aside className="w-64 bg-gray-900 text-white flex flex-col hidden md:flex">
                 <div className="h-16 flex items-center px-6 border-b border-gray-800">
-                    <Link href="/" className="text-xl font-bold tracking-tight flex items-center gap-2">
+                    <div className="text-xl font-bold tracking-tight flex items-center gap-2">
                         <div className="bg-blue-600 p-1.5 rounded-lg">
                             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                             </svg>
                         </div>
                         Carental
-                    </Link>
+                    </div>
                 </div>
 
                 <div className="flex-1 py-6 px-4 overflow-y-auto">
@@ -33,13 +33,31 @@ export default function Layout({ children }: LayoutProps) {
                             <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                             </svg>
-                            <span className="font-medium">Dashboard</span>
+                            <span className="font-medium">Tableau de bord</span>
                         </Link>
-                        
+
+                        {user && user.role === 'client' && (
+                            <Link href="/wishlist" className="flex items-center gap-3 px-4 py-3 bg-gray-800/50 hover:bg-gray-800 text-gray-300 hover:text-white rounded-xl transition-colors text-left">
+                                <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                                <span className="font-medium">Ma liste d'envies</span>
+                            </Link>
+                        )}
+
+                        {user && user.role === 'lessor' && (
+                            <Link href="/lessor/clients" className="flex items-center gap-3 px-4 py-3 bg-gray-800/50 hover:bg-gray-800 text-gray-300 hover:text-white rounded-xl transition-colors text-left">
+                                <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                                <span className="font-medium">Mes Clients</span>
+                            </Link>
+                        )}
+
                         {/* Notifications */}
                         {user && user.role === 'lessor' && (
                             <div className="relative">
-                                <button 
+                                <button
                                     onClick={() => setNotificationsOpen(!notificationsOpen)}
                                     className="w-full flex items-center justify-between gap-3 px-4 py-3 bg-gray-800/50 hover:bg-gray-800 text-gray-300 hover:text-white rounded-xl transition-colors text-left"
                                 >
@@ -73,9 +91,9 @@ export default function Layout({ children }: LayoutProps) {
                                                 notifications.map((notification: any) => (
                                                     <div key={notification.id} className="p-3 hover:bg-gray-700 rounded-lg transition-colors mb-1">
                                                         <p className="text-sm text-gray-200">{notification.data.message}</p>
-                                                        <Link 
-                                                            href={`/notifications/${notification.id}/read`} 
-                                                            method="post" 
+                                                        <Link
+                                                            href={`/notifications/${notification.id}/read`}
+                                                            method="post"
                                                             as="button"
                                                             className="text-xs text-blue-400 hover:text-blue-300 mt-2 font-medium"
                                                         >
@@ -98,18 +116,18 @@ export default function Layout({ children }: LayoutProps) {
                         <div className="absolute bottom-full left-4 right-4 mb-2 bg-gray-800 rounded-xl shadow-lg border border-gray-700 overflow-hidden z-50">
                             <div className="p-1">
                                 <Link href="/settings" className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors">
-                                    Settings
+                                    Paramètres
                                 </Link>
                                 <form method="post" action="/logout">
                                     <button type="submit" className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-gray-700 rounded-lg transition-colors">
-                                        Log out
+                                        Déconnexion
                                     </button>
                                 </form>
                             </div>
                         </div>
                     )}
-                    
-                    <button 
+
+                    <button
                         onClick={() => setDropdownOpen(!dropdownOpen)}
                         className="w-full flex items-center justify-between gap-3 px-4 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl transition-colors text-left"
                     >
@@ -136,7 +154,7 @@ export default function Layout({ children }: LayoutProps) {
                     <Link href="/" className="text-lg font-bold">Carental</Link>
                     <div className="flex items-center gap-3">
                         <form method="post" action="/logout">
-                            <button type="submit" className="text-sm font-medium text-gray-600">Logout</button>
+                            <button type="submit" className="text-sm font-medium text-gray-600">Déconnexion</button>
                         </form>
                         {user && user.role === 'lessor' && (
                             <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors">
@@ -168,9 +186,9 @@ export default function Layout({ children }: LayoutProps) {
                                 notifications.map((notification: any) => (
                                     <div key={notification.id} className="p-3 bg-gray-50 rounded-lg border border-gray-100">
                                         <p className="text-sm text-gray-700">{notification.data.message}</p>
-                                        <Link 
-                                            href={`/notifications/${notification.id}/read`} 
-                                            method="post" 
+                                        <Link
+                                            href={`/notifications/${notification.id}/read`}
+                                            method="post"
                                             as="button"
                                             className="text-xs text-blue-600 hover:text-blue-800 mt-2 font-medium"
                                         >
