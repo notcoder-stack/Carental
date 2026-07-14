@@ -38,7 +38,7 @@ class RentRequestController extends Controller
         // Notify the lessor
         $car->user->notify(new RentRequestedNotification($rentRequest));
 
-        return back()->with('success', 'Rent request sent successfully!');
+        return back()->with('success', 'request has been sent succesfully');
     }
 
     /**

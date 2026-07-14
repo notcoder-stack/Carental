@@ -18,8 +18,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('cars', [\App\Http\Controllers\CarController::class, 'store'])->name('cars.store');
 
-    Route::get('settings', [\App\Http\Controllers\SettingsController::class, 'show'])->name('settings.show');
+    Route::get('settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
     Route::post('settings', [\App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
+    Route::delete('settings', [\App\Http\Controllers\SettingsController::class, 'destroy'])->name('settings.destroy');
 
     Route::get('wishlist', [\App\Http\Controllers\WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('wishlist/{car}', [\App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
@@ -29,7 +30,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('lessors/{id}', [\App\Http\Controllers\LessorProfileController::class, 'show'])->name('lessors.show');
 });
 
-require __DIR__.'/settings.php';
 
 Route::get('/', [CarController::class, 'index'])->name('home');
 

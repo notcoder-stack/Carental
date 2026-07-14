@@ -7,7 +7,7 @@ use Inertia\Inertia;
 
 class SettingsController extends Controller
 {
-    public function show()
+    public function index()
     {
         return Inertia::render('settings', [
             'user' => auth()->user(),
@@ -26,5 +26,19 @@ class SettingsController extends Controller
         $request->user()->update($validated);
 
         return back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function destroy(Request $request)
+    {
+        $user = $request->user();
+
+        auth()->logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

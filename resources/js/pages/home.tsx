@@ -19,7 +19,7 @@ interface WelcomeProps {
 
 export default function Welcome({ cars }: WelcomeProps) {
     const { auth } = usePage<any>().props;
-    const wishlistedCars = auth?.wishlisted_cars || [];
+    const wishlistedCars = auth?.user?.wishlisted_cars || [];
 
     const toggleWishlist = (carId: number) => {
         router.post(`/wishlist/${carId}`, {}, {

@@ -1,4 +1,4 @@
-import { usePage, useForm } from '@inertiajs/react';
+import { usePage, useForm, router } from '@inertiajs/react';
 import Layout from '../layouts/Layout';
 import { FormEvent } from 'react';
 
@@ -18,6 +18,12 @@ export default function Settings() {
         post('/settings', {
             preserveScroll: true,
         });
+    };
+
+    const deleteAccount = () => {
+        if (window.confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ? Cette action est irréversible.')) {
+            router.delete('/settings');
+        }
     };
 
     return (
@@ -47,6 +53,7 @@ export default function Settings() {
                             <input
                                 type="email"
                                 value={data.email}
+                                disabled
                                 onChange={e => setData('email', e.target.value)}
                                 className={`w-full px-4 py-2.5 rounded-xl border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-4 focus:ring-blue-100 focus:border-blue-500 bg-gray-50 outline-none transition-all`}
                                 required
@@ -88,6 +95,22 @@ export default function Settings() {
                     </div>
                 </form>
             </div>
+
+            {user.role === 'lessor' && (
+                <div className="mt-8 bg-white p-6 rounded-2xl shadow-sm border border-red-100 max-w-2xl">
+                    <h2 className="text-xl font-bold text-gray-900 mb-2">Zone de danger</h2>
+                    <p className="text-sm text-gray-500 mb-4">
+                        Une fois votre compte supprimé, toutes ses ressources et données seront effacées de manière permanente.
+                        Veuillez vous assurer de télécharger toute donnée que vous souhaitez conserver avant de supprimer votre compte.
+                    </p>
+                    <button
+                        onClick={deleteAccount}
+                        className="bg-red-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-red-700 transition-colors focus:ring-4 focus:ring-red-100 outline-none shadow-md shadow-red-500/20"
+                    >
+                        Supprimer le compte
+                    </button>
+                </div>
+            )}
         </Layout>
     );
 }

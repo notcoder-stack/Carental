@@ -109,7 +109,7 @@ export default function Profile({ lessor }: ProfileProps) {
                                             </div>
                                         </div>
                                         {auth?.user ? (
-                                            <Link href={`/cars/${car.id}/rent`} method="post" as="button">
+                                            <Link href={`/cars/${car.id}/rent`} method="post" as="button" preserveScroll>
                                                 <button className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors duration-300 focus:ring-4 focus:ring-blue-100 outline-none shadow-md shadow-blue-500/25">
                                                     Louer
                                                 </button>

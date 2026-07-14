@@ -19,7 +19,7 @@ interface WishlistProps {
 
 export default function Wishlist({ cars }: WishlistProps) {
     const { auth } = usePage<any>().props;
-    const wishlistedCars = auth?.wishlisted_cars || [];
+    const wishlistedCars = auth?.user?.wishlisted_cars || [];
 
     const toggleWishlist = (carId: number) => {
         router.post(`/wishlist/${carId}`, {}, {
@@ -43,11 +43,6 @@ export default function Wishlist({ cars }: WishlistProps) {
                     </svg>
                     <h3 className="mt-2 text-sm font-medium text-gray-900">Aucune voiture sauvegardée</h3>
                     <p className="mt-1 text-sm text-gray-500">Explorez notre sélection et ajoutez des voitures à votre liste d'envies.</p>
-                    <div className="mt-6">
-                        <Link href="/" className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Parcourir les voitures
-                        </Link>
-                    </div>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

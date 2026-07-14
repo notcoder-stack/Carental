@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react'
 
 interface LayoutProps {
     children: ReactNode;

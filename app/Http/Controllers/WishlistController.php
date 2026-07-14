@@ -24,10 +24,8 @@ class WishlistController extends Controller
 
         if ($wishlist) {
             $wishlist->delete();
-            return back()->with('success', 'Voiture retirée de votre liste d\'envies.');
         } else {
             $user->wishlists()->create(['car_id' => $car->id]);
-            return back()->with('success', 'Voiture ajoutée à votre liste d\'envies.');
         }
     }
 }

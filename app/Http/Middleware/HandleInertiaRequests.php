@@ -44,6 +44,10 @@ class HandleInertiaRequests extends Middleware
                     'wishlisted_cars' => $request->user()->wishlists()->pluck('car_id'),
                 ]) : null,
             ],
+            'flash' => [
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
+            ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }
